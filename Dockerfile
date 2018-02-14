@@ -20,7 +20,20 @@ RUN apt-get install  -y ipython ipython-notebook
 RUN pip3 install jupyter
 RUN jupyter notebook --generate-config
 COPY sample.py .
+RUN apt-get install -y unzip
+RUN apt-get install -y libtool
+RUN apt-get install -y git
+RUN apt-get install -y autotools-dev
+RUN apt-get install -y automake
+RUN apt-get install -y autoconf
+RUN apt-get install -y bison
+RUN apt-get install -y flex
+ADD https://github.com/igraph/python-igraph/archive/master.zip .
+RUN unzip master.zip
+WORKDIR python-igraph-master
+RUN python3 setup.py develop --c-core-url https://github.com/igraph/igraph/archive/master.tar.gz
 
+WORKDIR /
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents
 # kernel crashes.
 ENV TINI_VERSION v0.6.0
