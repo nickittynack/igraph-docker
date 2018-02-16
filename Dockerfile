@@ -33,6 +33,9 @@ RUN unzip master.zip
 WORKDIR python-igraph-master
 RUN python3 setup.py develop --c-core-url https://github.com/igraph/igraph/archive/master.tar.gz
 
+# Any other python packages
+RUN pip3 install numpy
+
 WORKDIR /
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents
 # kernel crashes.
